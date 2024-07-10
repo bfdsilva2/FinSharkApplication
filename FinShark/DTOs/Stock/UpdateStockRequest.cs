@@ -10,7 +10,7 @@ namespace FinShark.DTOs.Stock
         public string Symbol { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(5, ErrorMessage = "Company Name must have a maximun of 255 characters ")]
+        [MaxLength(255, ErrorMessage = "Company Name must have a maximun of 255 characters ")]
         public string CompanyName { get; set; } = string.Empty;
 
         [Required]
@@ -22,7 +22,7 @@ namespace FinShark.DTOs.Stock
         public decimal LastDiv { get; set; }
 
         [Required]
-        [MaxLength(5, ErrorMessage = "Industry Name must have a maximun of 255 characters ")]
+        [MaxLength(255, ErrorMessage = "Industry Name must have a maximun of 255 characters ")]
         public string Industry { get; set; } = string.Empty;
 
         [Required]
