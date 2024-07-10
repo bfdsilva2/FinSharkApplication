@@ -5,6 +5,7 @@ using FinShark.Interfaces;
 using FinShark.Mappers;
 using FinShark.Model;
 using FinShark.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
@@ -23,6 +24,7 @@ namespace FinShark.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject queryObject) 
         {
             try

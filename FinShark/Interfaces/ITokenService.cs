@@ -2,7 +2,7 @@
 
 namespace FinShark.Interfaces
 {
-    public interface ITokenServices
+    public interface ITokenService
     {
         string CreateToken(AppUser appUser);
     }
