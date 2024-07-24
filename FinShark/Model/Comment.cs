@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinShark.Model
 {
+    [Table("Comments")]
     public class Comment
     {
         public int Id { get; set; }
@@ -9,5 +11,7 @@ namespace FinShark.Model
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public int StockId { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }

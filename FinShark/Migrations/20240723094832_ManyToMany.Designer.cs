@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinShark.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240710114947_SeedRole")]
-    partial class SeedRole
+    [Migration("20240723094832_ManyToMany")]
+    partial class ManyToMany
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,6 +118,21 @@ namespace FinShark.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("FinShark.Model.Portfolio", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "StockId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("FinShark.Model.Stock", b =>
                 {
                     b.Property<int>("Id")
@@ -181,15 +196,15 @@ namespace FinShark.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "286cacd0-df42-4032-b625-e6d7e8ee7a26",
-                            ConcurrencyStamp = "91a8ad49-6055-4357-8b5c-ddd51ef04aca",
+                            Id = "15aa4fb7-19eb-4976-81c1-5ba7e8328f5c",
+                            ConcurrencyStamp = "6e159bf6-e160-412b-abcd-859050af3963",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "90d14292-3acf-4bfb-a417-152130cd2f25",
-                            ConcurrencyStamp = "ac31226b-4c59-46e2-8fff-c5f162d7ae02",
+                            Id = "1c83ea81-89df-4c96-8aac-5ed34e9adf57",
+                            ConcurrencyStamp = "a6efcdad-3085-4acc-bc22-081efcd2fa45",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -310,6 +325,25 @@ namespace FinShark.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FinShark.Model.Portfolio", b =>
+                {
+                    b.HasOne("FinShark.Model.AppUser", "AppUser")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinShark.Model.Stock", "Stock")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Stock");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -361,9 +395,16 @@ namespace FinShark.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FinShark.Model.AppUser", b =>
+                {
+                    b.Navigation("Portfolios");
+                });
+
             modelBuilder.Entity("FinShark.Model.Stock", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }

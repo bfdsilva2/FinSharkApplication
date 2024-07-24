@@ -8,6 +8,7 @@ namespace FinShark.Interfaces
     {
         Task<List<Stock>> GetAllAsync(QueryObject queryObject);
         Task<Stock?> GetByIdAsync(int id);
+        Task<Stock?> GetBySymbolAsync(string symbol);
         Task<Stock?> CreateAsync(Stock stockModel);
         Task<Stock?> UpdateAsync(int id, UpdateStockRequest updateStockDto);
         Task<Stock?> DeleteAsync(int id);
